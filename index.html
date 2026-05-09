@@ -479,9 +479,9 @@
 
     <div id="subject-selector" style="display: none;">
       <div class="welcome-card slide-in">
-        <div class="emoji">💪</div>
-        <h2>和士くん、一緒に頑張ろう！</h2>
-        <p>最新出題傾向に基づいた<br>実戦問題にチャレンジしよう。</p>
+        <div class="emoji" id="subject-uni-icon">💪</div>
+        <h2 id="subject-uni-name">和士くん、一緒に頑張ろう！</h2>
+        <p id="subject-uni-desc">最新出題傾向に基づいた<br>実戦問題にチャレンジしよう。</p>
       </div>
 
       <div style="text-align: center; margin-bottom: 16px;">
@@ -594,6 +594,10 @@ function showUniversityContent() {
   const examInfo = document.getElementById('exam-info-card');
   const trendInfo = document.getElementById('trend-info-card');
 
+  document.getElementById('subject-uni-icon').textContent = uni.icon;
+  document.getElementById('subject-uni-name').textContent = uni.name + ' の問題にチャレンジ！';
+  document.getElementById('subject-uni-desc').innerHTML = '最新出題傾向に基づいた<br>実戦問題にチャレンジしよう。';
+
   if (state.university === 'sapporo') {
     document.getElementById('info-section-title').textContent = '札幌医大 入試情報';
     examInfo.innerHTML = `<h3>📋 2025年度 個別試験（2次）配点</h3>
@@ -644,6 +648,7 @@ function renderSubjectGrid() {
       ? QUESTIONS.hokkaido[key]
       : QUESTIONS[key];
     const count = questions ? questions.length : 0;
+    if (count === 0) return;
     const card = document.createElement('div');
     card.className = 'subject-card';
     card.dataset.subject = key;
