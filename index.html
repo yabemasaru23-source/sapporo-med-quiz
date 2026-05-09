@@ -101,6 +101,29 @@
     gap: 12px;
     margin-bottom: 20px;
   }
+  .university-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .university-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 24px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .university-card:active { transform: scale(0.97); }
+  .university-card .icon { font-size: 2.5rem; margin-bottom: 12px; }
+  .university-card .name { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+  .university-card .desc { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+  .university-card:hover { border-color: var(--primary-light); background: #eff6ff; }
   .subject-card {
     background: white;
     border-radius: var(--radius);
@@ -445,37 +468,52 @@
 
   <!-- ホーム画面 -->
   <div class="screen active" id="screen-home">
-    <div class="welcome-card slide-in">
-      <div class="emoji">💪</div>
-      <h2>和士くん、一緒に頑張ろう！</h2>
-      <p>札幌医大の最新出題傾向に基づいた<br>実戦問題にチャレンジしよう。</p>
+    <div id="university-selector">
+      <div class="welcome-card slide-in">
+        <div class="emoji">🎓</div>
+        <h2>どの大学の問題に挑戦する？</h2>
+        <p>志望校を選んで、<br>対策問題にチャレンジしよう。</p>
+      </div>
+      <div class="university-grid" id="university-grid"></div>
     </div>
 
-    <div class="section-title">科目を選択</div>
-    <div class="subject-grid" id="subject-grid"></div>
+    <div id="subject-selector" style="display: none;">
+      <div class="welcome-card slide-in">
+        <div class="emoji">💪</div>
+        <h2>和士くん、一緒に頑張ろう！</h2>
+        <p>最新出題傾向に基づいた<br>実戦問題にチャレンジしよう。</p>
+      </div>
 
-    <button class="all-btn" onclick="startQuiz('all')">
-      🎯 全科目ランダムで挑戦！
-    </button>
+      <div style="text-align: center; margin-bottom: 16px;">
+        <button class="back-btn" onclick="resetUniversitySelect()" style="display: inline-block; margin-bottom: 12px;">← 大学選択に戻る</button>
+      </div>
 
-    <div class="section-title">札幌医大 入試情報</div>
-    <div class="info-card">
-      <h3>📋 2025年度 個別試験（2次）配点</h3>
-      <ul>
-        <li>数学：200点（数ⅠAⅡBⅢ）</li>
-        <li>理科：200点（物理・化学・生物から2科目）</li>
-        <li>英語：200点（長文読解・英作文）</li>
-        <li>面接：段階評価</li>
-      </ul>
-    </div>
-    <div class="info-card">
-      <h3>🔍 最近の出題傾向</h3>
-      <ul>
-        <li>数学：微積分・数列・複素数が頻出</li>
-        <li>理科：生物は免疫・神経・遺伝が重点</li>
-        <li>英語：医学・生命科学テーマの長文が多い</li>
-        <li>共通テスト：8〜9割が合格ライン目安</li>
-      </ul>
+      <div class="section-title">科目を選択</div>
+      <div class="subject-grid" id="subject-grid"></div>
+
+      <button class="all-btn" onclick="startQuiz('all')">
+        🎯 全科目ランダムで挑戦！
+      </button>
+
+      <div class="section-title" id="info-section-title">札幌医大 入試情報</div>
+      <div class="info-card" id="exam-info-card">
+        <h3>📋 2025年度 個別試験（2次）配点</h3>
+        <ul>
+          <li>数学：200点（数ⅠAⅡBⅢ）</li>
+          <li>理科：200点（物理・化学・生物から2科目）</li>
+          <li>英語：200点（長文読解・英作文）</li>
+          <li>面接：段階評価</li>
+        </ul>
+      </div>
+      <div class="info-card" id="trend-info-card">
+        <h3>🔍 最近の出題傾向</h3>
+        <ul id="trend-list">
+          <li>数学：微積分・数列・複素数が頻出</li>
+          <li>理科：生物は免疫・神経・遺伝が重点</li>
+          <li>英語：医学・生命科学テーマの長文が多い</li>
+          <li>共通テスト：8〜9割が合格ライン目安</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -511,6 +549,7 @@ let state = {
   currentIndex: 0,
   answers: [],
   subject: 'all',
+  university: null,
   totalAnswered: 0,
   totalCorrect: 0,
   history: JSON.parse(localStorage.getItem('quiz-history') || '[]')
@@ -518,15 +557,93 @@ let state = {
 
 // ===== 初期化 =====
 function init() {
-  renderSubjectGrid();
+  renderUniversityGrid();
   updateScoreBar();
+}
+
+function renderUniversityGrid() {
+  const grid = document.getElementById('university-grid');
+  grid.innerHTML = '';
+  Object.entries(UNIVERSITIES).forEach(([key, info]) => {
+    const card = document.createElement('div');
+    card.className = 'university-card';
+    card.innerHTML = `
+      <div class="icon">${info.icon}</div>
+      <div class="name">${info.name}</div>
+      <div class="desc">${info.desc}</div>
+    `;
+    card.style.borderColor = 'transparent';
+    card.addEventListener('click', () => selectUniversity(key));
+    card.addEventListener('mouseenter', () => card.style.borderColor = info.color);
+    card.addEventListener('mouseleave', () => card.style.borderColor = 'transparent');
+    grid.appendChild(card);
+  });
+}
+
+function selectUniversity(university) {
+  state.university = university;
+  showUniversityContent();
+  renderSubjectGrid();
+}
+
+function showUniversityContent() {
+  document.getElementById('university-selector').style.display = 'none';
+  document.getElementById('subject-selector').style.display = 'block';
+
+  const uni = UNIVERSITIES[state.university];
+  const examInfo = document.getElementById('exam-info-card');
+  const trendInfo = document.getElementById('trend-info-card');
+
+  if (state.university === 'sapporo') {
+    document.getElementById('info-section-title').textContent = '札幌医大 入試情報';
+    examInfo.innerHTML = `<h3>📋 2025年度 個別試験（2次）配点</h3>
+      <ul>
+        <li>数学：200点（数ⅠAⅡBⅢ）</li>
+        <li>理科：200点（物理・化学・生物から2科目）</li>
+        <li>英語：200点（長文読解・英作文）</li>
+        <li>面接：段階評価</li>
+      </ul>`;
+    trendInfo.innerHTML = `<h3>🔍 最近の出題傾向</h3>
+      <ul>
+        <li>数学：微積分・数列・複素数が頻出</li>
+        <li>理科：生物は免疫・神経・遺伝が重点</li>
+        <li>英語：医学・生命科学テーマの長文が多い</li>
+        <li>共通テスト：8〜9割が合格ライン目安</li>
+      </ul>`;
+  } else {
+    document.getElementById('info-section-title').textContent = '北大医学部 入試情報';
+    examInfo.innerHTML = `<h3>📋 2025年度 個別試験（2次）配点</h3>
+      <ul>
+        <li>前期日程：総点1000点</li>
+        <li>数学：250点（数Ⅰ・Ⅱ・Ⅲ・A・B・C）</li>
+        <li>理科：400点（物理・化学・生物から2科目各200点）</li>
+        <li>英語：200点（長文読解・英作文）</li>
+        <li>小論文：150点</li>
+      </ul>`;
+    trendInfo.innerHTML = `<h3>🔍 最近の出題傾向</h3>
+      <ul>
+        <li>数学：複素数・微分方程式が頻出</li>
+        <li>理科：生物遺伝学・化学平衡・有機化学が重要</li>
+        <li>英語：医学・バイオテーマの難解な読解</li>
+        <li>面接：医学への志望動機を明確に</li>
+      </ul>`;
+  }
+}
+
+function resetUniversitySelect() {
+  state.university = null;
+  document.getElementById('university-selector').style.display = 'block';
+  document.getElementById('subject-selector').style.display = 'none';
 }
 
 function renderSubjectGrid() {
   const grid = document.getElementById('subject-grid');
   grid.innerHTML = '';
   Object.entries(SUBJECT_INFO).forEach(([key, info]) => {
-    const count = QUESTIONS[key].length;
+    const questions = state.university === 'hokkaido' && QUESTIONS.hokkaido[key]
+      ? QUESTIONS.hokkaido[key]
+      : QUESTIONS[key];
+    const count = questions ? questions.length : 0;
     const card = document.createElement('div');
     card.className = 'subject-card';
     card.dataset.subject = key;
@@ -550,17 +667,31 @@ function startQuiz(subject) {
   state.currentIndex = 0;
   state.answers = [];
 
+  let questions = [];
   if (subject === 'all') {
-    state.questions = shuffle([
-      ...QUESTIONS.math,
-      ...QUESTIONS.english,
-      ...QUESTIONS.science,
-      ...QUESTIONS.japanese
-    ]);
+    if (state.university === 'hokkaido') {
+      questions = shuffle([
+        ...QUESTIONS.hokkaido.math,
+        ...QUESTIONS.hokkaido.english,
+        ...QUESTIONS.hokkaido.science
+      ]);
+    } else {
+      questions = shuffle([
+        ...QUESTIONS.math,
+        ...QUESTIONS.english,
+        ...QUESTIONS.science,
+        ...QUESTIONS.japanese
+      ]);
+    }
   } else {
-    state.questions = shuffle([...QUESTIONS[subject]]);
+    if (state.university === 'hokkaido' && QUESTIONS.hokkaido[subject]) {
+      questions = shuffle([...QUESTIONS.hokkaido[subject]]);
+    } else {
+      questions = shuffle([...QUESTIONS[subject]]);
+    }
   }
 
+  state.questions = questions;
   showScreen('quiz');
   renderQuestion();
 }
@@ -808,7 +939,10 @@ function showScreen(name) {
 }
 
 function goHome() {
+  state.university = null;
   showScreen('home');
+  document.getElementById('university-selector').style.display = 'block';
+  document.getElementById('subject-selector').style.display = 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
