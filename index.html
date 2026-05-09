@@ -710,7 +710,8 @@ function renderQuestion() {
   const q = state.questions[state.currentIndex];
   const total = state.questions.length;
   const current = state.currentIndex + 1;
-  const info = SUBJECT_INFO[q.subject];
+  const subjectKey = q.subject.replace('hokkaido_', '');
+  const info = SUBJECT_INFO[subjectKey];
 
   document.getElementById('progress-info').textContent = `問題 ${current}/${total}`;
   document.getElementById('progress-fill').style.width = `${(state.currentIndex / total) * 100}%`;
@@ -886,10 +887,11 @@ function showResult() {
   // 科目別集計
   const subjectResults = {};
   state.questions.forEach((q, i) => {
-    if (!subjectResults[q.subject]) subjectResults[q.subject] = { correct: 0, total: 0 };
+    const sk = q.subject.replace('hokkaido_', '');
+    if (!subjectResults[sk]) subjectResults[sk] = { correct: 0, total: 0 };
     if (state.answers[i] !== null) {
-      subjectResults[q.subject].total++;
-      if (state.answers[i]) subjectResults[q.subject].correct++;
+      subjectResults[sk].total++;
+      if (state.answers[i]) subjectResults[sk].correct++;
     }
   });
 
