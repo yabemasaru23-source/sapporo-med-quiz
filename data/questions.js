@@ -87,6 +87,70 @@ const QUESTIONS = {
       choices: ["144", "162", "168", "180"],
       answer: 2,
       explanation: "3の倍数は各桁の数字の和が3の倍数のとき。\n{1-9}から3つ選び和が3の倍数になる組合せ：\n₉C₃=84通りのうち、和が3の倍数になるのは28通り。\n各組合せで並べ方は3!=6通り。\n28×6=168通り"
+    },
+    {
+      id: "m9", subject: "math", type: "choice", difficulty: "standard",
+      category: "三角関数",
+      question: "sin θ + cos θ = √6/2 のとき、sin θ cos θ の値を求めよ。",
+      choices: ["1/8", "1/4", "√6/8", "√6/4"],
+      answer: 1,
+      explanation: "(sinθ + cosθ)² = 1 + 2sinθcosθ\n(√6/2)² = 6/4\n1 + 2sinθcosθ = 6/4\n2sinθcosθ = 2/4 = 1/2\nsinθcosθ = 1/4"
+    },
+    {
+      id: "m10", subject: "math", type: "choice", difficulty: "standard",
+      category: "積分・面積",
+      question: "y = x² − 2x と y = x で囲まれた領域の面積を求めよ。",
+      choices: ["7/2", "9/2", "5", "11/2"],
+      answer: 1,
+      explanation: "交点：x²−2x=x → x(x−3)=0 → x=0, 3\n面積 = ∫₀³(x−(x²−2x))dx = ∫₀³(3x−x²)dx\n= [3x²/2 − x³/3]₀³ = 27/2 − 9 = 9/2"
+    },
+    {
+      id: "m11", subject: "math", type: "choice", difficulty: "standard",
+      category: "確率",
+      question: "コインを4回投げる。表が出れば+1点、裏が出れば−1点とし、0点から始める。一度も負の点数にならない確率を求めよ。",
+      choices: ["1/4", "5/16", "3/8", "7/16"],
+      answer: 2,
+      explanation: "全経路：2⁴=16通り\n一度も負にならない経路は HHHH, HHHT, HHTH, HHTT, HTHH, HTHT の6通り（最初にTが来ると即−1）\n確率 = 6/16 = 3/8"
+    },
+    {
+      id: "m12", subject: "math", type: "choice", difficulty: "standard",
+      category: "数列の極限",
+      question: "lim(n→∞) (3n² + 2n − 1)/(n² + 5n + 3) を求めよ。",
+      choices: ["1", "2", "3", "∞"],
+      answer: 2,
+      explanation: "分子・分母を n² で割る：\n(3 + 2/n − 1/n²)/(1 + 5/n + 3/n²)\nn→∞ のとき → 3/1 = 3"
+    },
+    {
+      id: "m13", subject: "math", type: "choice", difficulty: "standard",
+      category: "絶対値・不等式",
+      question: "|2x − 3| < 5 を満たす x の範囲を求めよ。",
+      choices: ["−1 < x < 4", "x < −1 または x > 4", "−2 < x < 4", "0 < x < 4"],
+      answer: 0,
+      explanation: "−5 < 2x−3 < 5\n−2 < 2x < 8\n−1 < x < 4"
+    },
+    {
+      id: "m14", subject: "math", type: "choice", difficulty: "standard",
+      category: "対数",
+      question: "log₃(27) × log₂(8) の値を求めよ。",
+      choices: ["3", "6", "9", "12"],
+      answer: 2,
+      explanation: "log₃(27) = log₃(3³) = 3\nlog₂(8) = log₂(2³) = 3\n3 × 3 = 9"
+    },
+    {
+      id: "m15", subject: "math", type: "choice", difficulty: "standard",
+      category: "二項定理",
+      question: "(x + 1)⁵ の展開式における x³ の係数を求めよ。",
+      choices: ["5", "8", "10", "15"],
+      answer: 2,
+      explanation: "二項定理：(x+1)⁵ の x³ の係数は ₅C₂ × 1² = 10"
+    },
+    {
+      id: "m16", subject: "math", type: "written", difficulty: "hard",
+      category: "微分・接線",
+      question: "曲線 y = x³ − 3x 上の点 (2, 2) における接線の方程式を求めよ。",
+      answer: "y = 9x − 16",
+      model_answer: "y' = 3x² − 3\nx=2 のとき y' = 12 − 3 = 9\n接線：y − 2 = 9(x − 2)\ny = 9x − 16",
+      explanation: "接線の傾きは微分係数で求める。f'(2) = 9 なので、点(2,2)を通る傾き9の直線。"
     }
   ],
   english: [
@@ -165,6 +229,59 @@ const QUESTIONS = {
       choices: ["toxic", "expensive", "having no medical effect", "cutting-edge"],
       answer: 2,
       explanation: "inert = 不活性な、薬効のない。文脈から「何も入っていない物質」を指す。プラセボ（偽薬）の説明文なので、「薬効のない物質」が正解。"
+    },
+    {
+      id: "e7", subject: "english", type: "choice", difficulty: "standard",
+      category: "文法",
+      question: "It is essential that every patient ( ) regular health checkups.\n最も適切な語を選べ。",
+      choices: ["has", "have", "had", "would have"],
+      answer: 1,
+      explanation: "「It is essential/important/necessary that + S + 動詞の原形」は仮定法現在。主語が三人称単数でも動詞は原形（have）を使う。"
+    },
+    {
+      id: "e8", subject: "english", type: "choice", difficulty: "standard",
+      category: "語彙",
+      question: "In medicine, a 'pathogen' refers to ( ).",
+      choices: ["治療薬", "病原体（病気を引き起こす微生物）", "抗体", "診断装置"],
+      answer: 1,
+      explanation: "pathogen（パソジェン）：病原体。細菌・ウイルス・寄生虫など病気を引き起こす微生物の総称。医学英語の基本語彙。"
+    },
+    {
+      id: "e9", subject: "english", type: "choice", difficulty: "hard",
+      category: "読解",
+      question: "\"CRISPR-Cas9 technology allows scientists to edit genes with unprecedented precision, raising hopes for curing hereditary diseases while also sparking ethical debates about genetic manipulation.\"\n\nWhat is the main idea of this sentence?",
+      choices: [
+        "CRISPR can only be used for ethical research",
+        "Gene editing offers medical promise but raises ethical concerns",
+        "Hereditary diseases are now completely curable",
+        "Scientists oppose genetic manipulation"
+      ],
+      answer: 1,
+      explanation: "「医療への希望（hopes for curing）」と「倫理的議論（ethical debates）」の両面が述べられている。技術の可能性と倫理的課題の両立がテーマ。"
+    },
+    {
+      id: "e10", subject: "english", type: "choice", difficulty: "standard",
+      category: "文法",
+      question: "The medicine ( ) by the pharmacist before the patient arrived.\n最も適切な形を選べ。",
+      choices: ["was prepared", "had been prepared", "has prepared", "is preparing"],
+      answer: 1,
+      explanation: "「患者が到着した時」より前に「薬が準備されていた」→ 過去完了受動態 had been prepared が正解。"
+    },
+    {
+      id: "e11", subject: "english", type: "choice", difficulty: "standard",
+      category: "語彙",
+      question: "The surgeon's skill was ( ), as she completed the delicate operation without any complications.",
+      choices: ["mediocre", "exemplary", "negligent", "ambiguous"],
+      answer: 1,
+      explanation: "exemplary：模範的な、優れた。合併症なしに手術を完了したという文脈に最も適切。mediocre：平凡、negligent：怠慢、ambiguous：曖昧。"
+    },
+    {
+      id: "e12", subject: "english", type: "written", difficulty: "hard",
+      category: "英作文",
+      question: "次の日本文を英語に訳せ。\n「医師は患者の話を注意深く聞き、正確な診断を下すために最善を尽くすべきだ。」",
+      answer: null,
+      model_answer: "Doctors should listen carefully to their patients and do their best to make accurate diagnoses.",
+      explanation: "ポイント：\n・listen carefully to（注意深く聞く）\n・do one's best to（〜するために最善を尽くす）\n・make a diagnosis（診断を下す）\n・accurate（正確な）"
     }
   ],
   science: [
@@ -265,6 +382,80 @@ const QUESTIONS = {
       choices: ["グルコース", "ピルビン酸", "RuBP（リブロース1,5-ビスリン酸）", "ATP"],
       answer: 2,
       explanation: "CO₂はルビスコ（RuBisCO）の触媒作用によりRuBP（C₅）と結合し、不安定なC₆化合物を経て2分子の3-ホスホグリセリン酸（3-PGA、C₃）になる。これが暗反応（カルビン回路）の最初のCO₂固定反応。"
+    },
+    {
+      id: "s9", subject: "science", type: "choice", difficulty: "standard",
+      category: "生物・遺伝子発現",
+      question: "DNAからタンパク質が合成される過程（セントラルドグマ）として正しい順序はどれか。",
+      choices: [
+        "DNA → 翻訳 → mRNA → 転写 → タンパク質",
+        "DNA → 転写 → mRNA → 翻訳 → タンパク質",
+        "mRNA → 転写 → DNA → 翻訳 → タンパク質",
+        "DNA → 複製 → タンパク質"
+      ],
+      answer: 1,
+      explanation: "セントラルドグマ：DNA → (転写：RNAポリメラーゼ) → mRNA → (翻訳：リボソーム) → タンパク質\n転写はDNAを鋳型にmRNAを合成し、翻訳はmRNAのコドンをもとにアミノ酸を連結する。"
+    },
+    {
+      id: "s10", subject: "science", type: "choice", difficulty: "standard",
+      category: "化学・物質量",
+      question: "24gのマグネシウム（原子量 Mg=24）の物質量は何molか。",
+      choices: ["0.5mol", "1mol", "2mol", "24mol"],
+      answer: 1,
+      explanation: "物質量(mol) = 質量(g) ÷ モル質量(g/mol)\n= 24g ÷ 24g/mol = 1mol"
+    },
+    {
+      id: "s11", subject: "science", type: "choice", difficulty: "standard",
+      category: "生物・細胞周期",
+      question: "2n=46のヒト体細胞が体細胞分裂を完了した後、娘細胞の染色体数はいくつか。",
+      choices: ["23本", "46本", "92本", "48本"],
+      answer: 1,
+      explanation: "体細胞分裂では染色体数は変化しない。分裂後も各娘細胞は2n=46本の染色体を持つ。（減数分裂ではn=23になる）"
+    },
+    {
+      id: "s12", subject: "science", type: "choice", difficulty: "hard",
+      category: "生物・ホルモン",
+      question: "血糖値を上昇させるホルモンの組合せとして正しいのはどれか。",
+      choices: ["インスリンとグルカゴン", "グルカゴンとアドレナリン", "インスリンのみ", "アドレナリンのみ"],
+      answer: 1,
+      explanation: "血糖値上昇：グルカゴン（膵島α細胞）・アドレナリン（副腎髄質）・コルチゾール（副腎皮質）\n血糖値低下：インスリン（膵島β細胞）のみ"
+    },
+    {
+      id: "s13", subject: "science", type: "choice", difficulty: "standard",
+      category: "化学・熱化学",
+      question: "塩酸と水酸化ナトリウム水溶液の中和反応に関する記述として正しいのはどれか。",
+      choices: ["吸熱反応である", "発熱反応である", "温度変化はない", "条件によって異なる"],
+      answer: 1,
+      explanation: "中和反応は発熱反応。H⁺ + OH⁻ → H₂O の反応で熱が発生する（中和熱 約57.3kJ/mol）。"
+    },
+    {
+      id: "s14", subject: "science", type: "choice", difficulty: "standard",
+      category: "生物・酵素",
+      question: "酵素の性質として誤っているのはどれか。",
+      choices: [
+        "基質特異性がある",
+        "反応前後で自身は変化しない（触媒）",
+        "最適温度・最適pHが存在する",
+        "高温になるほど活性が高くなる"
+      ],
+      answer: 3,
+      explanation: "酵素は高温では変性して活性を失う（失活）。ヒトの酵素の最適温度は約37℃。基質特異性・触媒作用・最適条件が存在することは正しい性質。"
+    },
+    {
+      id: "s15", subject: "science", type: "choice", difficulty: "hard",
+      category: "化学・有機",
+      question: "エタノール（C₂H₅OH）を酸化したとき、最初に生成する物質はどれか。",
+      choices: ["酢酸（CH₃COOH）", "アセトアルデヒド（CH₃CHO）", "エチレン（C₂H₄）", "ジエチルエーテル"],
+      answer: 1,
+      explanation: "エタノール → (酸化) → アセトアルデヒド → (さらに酸化) → 酢酸\n肝臓のアルコール脱水素酵素もこの反応を触媒する。飲酒後の二日酔いはアセトアルデヒドの蓄積が原因。"
+    },
+    {
+      id: "s16", subject: "science", type: "written", difficulty: "hard",
+      category: "生物・免疫（論述）",
+      question: "自然免疫と獲得免疫の違いについて、関与する細胞を含めて150字程度で説明せよ。",
+      answer: null,
+      model_answer: "自然免疫は生来備わった非特異的防御機構で、好中球・マクロファージ・NK細胞などが迅速に異物を排除する。獲得免疫は抗原特異的な適応免疫で、T細胞（細胞性免疫）とB細胞→形質細胞（液性免疫・抗体産生）が中心となり、免疫記憶が形成される。",
+      explanation: "採点ポイント：\n①自然免疫の非特異性と関与細胞（好中球・マクロファージ・NK細胞）\n②獲得免疫の特異性・記憶\n③T細胞とB細胞の役割分担\n④抗体産生の説明"
     }
   ],
   japanese: [
@@ -332,6 +523,56 @@ const QUESTIONS = {
       choices: ["鴨長明", "兼好法師（吉田兼好）", "清少納言", "紫式部"],
       answer: 1,
       explanation: "徒然草は兼好法師（吉田兼好）の随筆。三大随筆は「枕草子」（清少納言）・「方丈記」（鴨長明）・「徒然草」（兼好法師）。医大入試では古典の基礎知識も問われる。"
+    },
+    {
+      id: "j6", subject: "japanese", type: "choice", difficulty: "standard",
+      category: "現代文・語彙",
+      question: "次の文中の（　）に入る最も適切な語を選べ。\n「医療現場では、（　）な判断だけでなく、患者に寄り添う姿勢も求められる。」",
+      choices: ["機械的", "感情的", "主観的", "曖昧"],
+      answer: 0,
+      explanation: "「患者に寄り添う姿勢」と対比されているので「機械的（mechanical）な判断」が最も自然。数字やデータだけでなく、人間的な対応も必要という文脈。"
+    },
+    {
+      id: "j7", subject: "japanese", type: "choice", difficulty: "standard",
+      category: "古文・単語",
+      question: "古語「をかし」の意味として最も適切なものはどれか。",
+      choices: ["恐ろしい", "趣深い・風情がある", "悲しい", "恥ずかしい"],
+      answer: 1,
+      explanation: "「をかし」は「趣深い・優美だ・面白い」という意味の形容詞。清少納言の「枕草子」でよく使われる語。「あはれ」（しみじみとした情趣）と対比される概念として重要。"
+    },
+    {
+      id: "j8", subject: "japanese", type: "choice", difficulty: "hard",
+      category: "現代文・読解",
+      question: "「科学技術の発展は利便性をもたらす一方、倫理的問題を突きつける。特に生命科学においては、人間の尊厳と研究の自由の間で常に緊張関係が存在する。」\n\nこの文章が最も強調している点は何か。",
+      choices: [
+        "科学技術は危険であり規制すべきだ",
+        "生命科学における利便性と倫理の緊張関係",
+        "研究の自由は無制限に認められるべきだ",
+        "人間の尊厳より科学の発展が優先される"
+      ],
+      answer: 1,
+      explanation: "「利便性と倫理的問題」「人間の尊厳と研究の自由の緊張関係」という対立構造が主旨。一方的な価値判断ではなく、両者の緊張関係の存在を述べている。"
+    },
+    {
+      id: "j9", subject: "japanese", type: "written", difficulty: "hard",
+      category: "小論文",
+      question: "次のテーマについて400字程度で論じよ。\n\n「現代医療において、AIはどのような役割を果たすべきか」",
+      answer: null,
+      model_answer: "【模範解答例】\n現代医療においてAIは、診断支援・画像解析・予後予測など、医師の意思決定を補助するツールとして活用すべきと考える。\n\nAIは膨大なデータを高速で処理し、見落としやすい疾患パターンを検出する能力に優れる。例えば、がんの画像診断や薬剤の相互作用チェックですでに成果を挙げている。\n\nしかし、最終的な診断・治療方針の決定は医師が担うべきである。患者との信頼関係を築き、個人の価値観や生活背景を考慮した医療は、AIには代替できない人間固有の領域である。\n\nAIと医師が協働することで、より精度の高い、温かみのある医療が実現できると確信する。",
+      explanation: "採点ポイント：\n①AIの具体的役割を述べているか\n②AIの限界・医師の役割を述べているか\n③自分の意見が明確か\n④論理的な構成になっているか\n⑤字数・誤字脱字の確認"
+    },
+    {
+      id: "j10", subject: "japanese", type: "choice", difficulty: "standard",
+      category: "語彙・医療用語",
+      question: "「患者の予後が良好である」という表現における「予後」の意味として正しいのはどれか。",
+      choices: [
+        "治療前の病状の記録",
+        "治療後の病状の見通し・経過",
+        "手術の準備段階のこと",
+        "薬の副作用の記録"
+      ],
+      answer: 1,
+      explanation: "「予後（よご）」：治療後の病状の見通しや回復の経過のこと。「予後良好」は回復見込みが良いことを意味する。医療現場で頻繁に使われる重要な用語。"
     }
   ],
   hokkaido: {

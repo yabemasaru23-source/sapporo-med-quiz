@@ -444,7 +444,7 @@
 <body>
 
 <div class="header">
-  <h1>🏥 札幌医大 合格対策アプリ</h1>
+  <h1 id="main-header-title">🏥 医学部 合格対策アプリ</h1>
   <p>和士くん専用 受験問題集</p>
   <span class="badge">📅 2025年度入試対応</span>
 </div>
@@ -597,6 +597,7 @@ function showUniversityContent() {
   document.getElementById('subject-uni-icon').textContent = uni.icon;
   document.getElementById('subject-uni-name').textContent = uni.name + ' の問題にチャレンジ！';
   document.getElementById('subject-uni-desc').innerHTML = '最新出題傾向に基づいた<br>実戦問題にチャレンジしよう。';
+  document.getElementById('main-header-title').textContent = uni.icon + ' ' + uni.name + ' 合格対策アプリ';
 
   if (state.university === 'sapporo') {
     document.getElementById('info-section-title').textContent = '札幌医大 入試情報';
@@ -638,17 +639,18 @@ function resetUniversitySelect() {
   state.university = null;
   document.getElementById('university-selector').style.display = 'block';
   document.getElementById('subject-selector').style.display = 'none';
+  document.getElementById('main-header-title').textContent = '🏥 医学部 合格対策アプリ';
 }
 
 function renderSubjectGrid() {
   const grid = document.getElementById('subject-grid');
   grid.innerHTML = '';
   Object.entries(SUBJECT_INFO).forEach(([key, info]) => {
-    const questions = state.university === 'hokkaido' && QUESTIONS.hokkaido[key]
+    if (state.university === 'hokkaido' && !QUESTIONS.hokkaido[key]) return;
+    const questions = state.university === 'hokkaido'
       ? QUESTIONS.hokkaido[key]
       : QUESTIONS[key];
     const count = questions ? questions.length : 0;
-    if (count === 0) return;
     const card = document.createElement('div');
     card.className = 'subject-card';
     card.dataset.subject = key;
@@ -950,6 +952,7 @@ function goHome() {
   showScreen('home');
   document.getElementById('university-selector').style.display = 'block';
   document.getElementById('subject-selector').style.display = 'none';
+  document.getElementById('main-header-title').textContent = '🏥 医学部 合格対策アプリ';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
